@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Bored App</string>
+    <string name="choose_activity_message">Clique no botão abaixo para escolher uma atividade aleatória</string>
+    <string name="choose_activity">Escolher Atividade</string>
+</resources>
