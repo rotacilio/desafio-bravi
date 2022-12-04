@@ -2,7 +2,7 @@
     <string name="app_name">Bored App</string>
     <string name="choose_activity_message">Clique no botão abaixo para escolher uma atividade aleatória</string>
     <string name="choose_activity">Escolher Atividade</string>
-    <string name="searching_activity">Buscando atividade...</string>
+    <string name="searching_activity">Buscando atividade&#8230;</string>
     <string name="chosen_activity">Atividade escolhida</string>
     <string name="description">Descrição: %s</string>
     <string name="type">Tipo: %s</string>
@@ -15,6 +15,9 @@
     <string name="done_activities">Atividades concluídas</string>
     <string name="result_add_success">Atividade salva com sucesso!</string>
     <string name="result_add_fail">Ocorreu um erro ao tentar salvar a atividade!</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="result">Resultado</string>
+    <string name="start">Iniciar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="finish">Concluir</string>
 </resources>

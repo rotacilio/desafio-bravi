@@ -13,4 +13,6 @@ class ActivitiesRepository @Inject constructor(
         service.getActivity(type)
 
     suspend fun createActivity(entity: ActivityEntity) = dao.create(entity)
+
+    suspend fun getPendingActivities() = dao.getPendingActivities()
 }

@@ -37,7 +37,16 @@ fun MainScreen() {
             )
         }
         composable("pendingActivities") {
-            Text(text = "My Activities Screen")
+            PendingActivitiesScreen(
+                onBack = {
+                    navController.navigate(
+                        startDestination,
+                        NavOptions.Builder()
+                            .setPopUpTo(navController.graph.findStartDestination().id, true)
+                            .build()
+                    )
+                }
+            )
         }
         composable("doneActivities") {
             Text(text = "My Activities Screen")

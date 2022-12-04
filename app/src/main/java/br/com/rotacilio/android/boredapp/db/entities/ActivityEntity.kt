@@ -4,8 +4,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import br.com.rotacilio.android.boredapp.enums.ActivityStatus
-import java.time.LocalDateTime
-import java.util.Date
+import java.util.*
 
 @Entity(
     tableName = "activities",
@@ -26,4 +25,17 @@ data class ActivityEntity(
     val start: Date? = null,
     val end: Date? = null,
     val elapsedTime: Long? = null,
-)
+) {
+    val statusLabel: String
+        get() = when (status) {
+            ActivityStatus.DONE -> "Concluída"
+            ActivityStatus.IN_PROCESS -> "Em realização"
+            ActivityStatus.PENDING -> "Pendente"
+        }
+
+    val tempoDecorrido: String
+        get() = when (status) {
+            ActivityStatus.DONE -> "0 segundos"
+            else -> "-"
+        }
+}
