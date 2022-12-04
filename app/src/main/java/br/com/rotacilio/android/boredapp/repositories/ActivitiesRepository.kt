@@ -15,4 +15,6 @@ class ActivitiesRepository @Inject constructor(
     suspend fun createActivity(entity: ActivityEntity) = dao.create(entity)
 
     suspend fun getPendingActivities() = dao.getPendingActivities()
+
+    suspend fun getFinishedActivities() = dao.getFinishedActivities()
 }

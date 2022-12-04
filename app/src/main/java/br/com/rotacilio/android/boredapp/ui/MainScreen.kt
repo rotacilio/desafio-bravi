@@ -1,6 +1,5 @@
 package br.com.rotacilio.android.boredapp.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
@@ -49,7 +48,16 @@ fun MainScreen() {
             )
         }
         composable("doneActivities") {
-            Text(text = "My Activities Screen")
+            FinishedActivitiesScreen(
+                onBack = {
+                    navController.navigate(
+                        startDestination,
+                        NavOptions.Builder()
+                            .setPopUpTo(navController.graph.findStartDestination().id, true)
+                            .build()
+                    )
+                }
+            )
         }
     }
 }

@@ -20,4 +20,6 @@
     <string name="start">Iniciar</string>
     <string name="cancel">Cancelar</string>
     <string name="finish">Concluir</string>
+    <string name="finished_activities">Atividades Concluídas</string>
+    <string name="elapsed_time_format">Tempo decorrido: %s</string>
 </resources>

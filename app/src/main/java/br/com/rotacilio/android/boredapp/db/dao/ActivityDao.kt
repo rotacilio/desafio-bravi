@@ -14,4 +14,7 @@ interface ActivityDao {
 
     @Query("SELECT * FROM activities WHERE status IN (0, 2)")
     suspend fun getPendingActivities(): List<ActivityEntity>
+
+    @Query("SELECT * FROM activities WHERE status = 1")
+    suspend fun getFinishedActivities(): List<ActivityEntity>
 }

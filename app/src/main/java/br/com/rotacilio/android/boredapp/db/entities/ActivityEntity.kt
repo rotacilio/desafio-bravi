@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import br.com.rotacilio.android.boredapp.enums.ActivityStatus
+import br.com.rotacilio.android.boredapp.extensions.between
 import java.util.*
 
 @Entity(
@@ -35,7 +36,7 @@ data class ActivityEntity(
 
     val tempoDecorrido: String
         get() = when (status) {
-            ActivityStatus.DONE -> "0 segundos"
+            ActivityStatus.DONE -> "${start?.between(end)} minutos"
             else -> "-"
         }
 }

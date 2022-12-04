@@ -9,8 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -20,33 +18,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import br.com.rotacilio.android.boredapp.R
-import br.com.rotacilio.android.boredapp.db.entities.ActivityEntity
-import br.com.rotacilio.android.boredapp.ui.components.ActivityDetailsDialog
 import br.com.rotacilio.android.boredapp.ui.components.CardActivity
 import br.com.rotacilio.android.boredapp.utils.UiState
-import br.com.rotacilio.android.boredapp.viewmodel.PendingActivitiesViewModel
+import br.com.rotacilio.android.boredapp.viewmodel.FinishedActivitiesViewModel
 
 @Composable
-fun PendingActivitiesScreen(
+fun FinishedActivitiesScreen(
     onBack: () -> Unit
 ) {
-    val viewModel = hiltViewModel<PendingActivitiesViewModel>()
+    val viewModel = hiltViewModel<FinishedActivitiesViewModel>()
     val uiState = viewModel.uiState.collectAsState()
-    val selectedActivity = remember { mutableStateOf<ActivityEntity?>(null) }
-
-    if (selectedActivity.value != null) {
-        ActivityDetailsDialog(
-            activity = selectedActivity,
-            startActivity = {
-                viewModel.startActivity(selectedActivity.value!!)
-                selectedActivity.value = null
-            },
-            finishActivity = {
-                viewModel.finishActivity(selectedActivity.value!!)
-                selectedActivity.value = null
-            }
-        )
-    }
 
     Scaffold(
         modifier = Modifier
@@ -58,7 +39,7 @@ fun PendingActivitiesScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(start = 24.dp),
-                    text = stringResource(id = R.string.pending_activities),
+                    text = stringResource(id = R.string.finished_activities),
                     color = Color.White,
                     fontWeight = FontWeight.Medium,
                     fontSize = 24.sp
@@ -85,7 +66,7 @@ fun PendingActivitiesScreen(
                 is UiState.Loading -> {
                     Text(text = "Carregando...")
                 }
-                is PendingActivitiesViewModel.UiStateVC.PendingActivitiesWasLoaded -> {
+                is FinishedActivitiesViewModel.UiStateVC.FinishedActivitiesWasLoaded -> {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -93,8 +74,7 @@ fun PendingActivitiesScreen(
                     ) {
                         items(state.data) { activity ->
                             CardActivity(
-                                activity = activity,
-                                onClick = { selectedActivity.value = activity }
+                                activity = activity
                             )
                         }
                     }
