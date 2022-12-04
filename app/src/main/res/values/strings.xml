@@ -22,4 +22,5 @@
     <string name="finish">Concluir</string>
     <string name="finished_activities">Atividades Concluídas</string>
     <string name="elapsed_time_format">Tempo decorrido: %s</string>
+    <string name="select_type">Selecione o tipo da atividade</string>
 </resources>

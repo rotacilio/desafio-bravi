@@ -1,6 +1,5 @@
 package br.com.rotacilio.android.boredapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.rotacilio.android.boredapp.enums.ActivityType
@@ -33,8 +32,9 @@ class HomeViewModel @Inject constructor(
         get() = _activityWasSaved.asStateFlow()
 
     fun getRandomActivity(type: ActivityType? = null) {
+        val selectedType = if (type == ActivityType.ALL) null else type
         viewModelScope.launch {
-            getActivityUseCase(type).onEach { dataState ->
+            getActivityUseCase(selectedType).onEach { dataState ->
                 when (dataState) {
                     is DataState.Loading -> {
                         _uiState.emit(UiState.Loading)

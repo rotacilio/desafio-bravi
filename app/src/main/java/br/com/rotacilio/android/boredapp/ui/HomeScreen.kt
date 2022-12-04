@@ -1,6 +1,7 @@
 package br.com.rotacilio.android.boredapp.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,7 +12,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import br.com.rotacilio.android.boredapp.R
+import br.com.rotacilio.android.boredapp.enums.ActivityType
 import br.com.rotacilio.android.boredapp.model.Activity
+import br.com.rotacilio.android.boredapp.ui.components.MyDropdownMenu
 import br.com.rotacilio.android.boredapp.utils.UiState
 import br.com.rotacilio.android.boredapp.viewmodel.HomeViewModel
 
@@ -180,6 +183,9 @@ fun LoadingActivity() {
 fun ChooseActivity(
     viewModel: HomeViewModel
 ) {
+    var expanded by remember { mutableStateOf(false) }
+    val selectedIndex = remember { mutableStateOf(0) }
+
     Text(
         modifier = Modifier
             .fillMaxWidth(),
@@ -187,11 +193,30 @@ fun ChooseActivity(
         style = MaterialTheme.typography.h5,
         textAlign = TextAlign.Center
     )
+    MyDropdownMenu(
+        modifier = Modifier.fillMaxWidth(),
+        expanded = expanded,
+        selectedIndex = selectedIndex,
+        onDismissRequest = { expanded = false },
+        items = ActivityType.values().asList()
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 24.dp),
+        text = stringResource(id = R.string.select_type)
+    )
+    Text(
+        modifier = Modifier
+            .clickable { expanded = true },
+        text = ActivityType.values()[selectedIndex.value].toString(),
+        style = MaterialTheme.typography.h5,
+        textAlign = TextAlign.Center
+    )
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 24.dp),
-        onClick = { viewModel.getRandomActivity() },
+        onClick = { viewModel.getRandomActivity(ActivityType.values()[selectedIndex.value]) },
     ) {
         Text(
             text = stringResource(id = R.string.choose_activity)

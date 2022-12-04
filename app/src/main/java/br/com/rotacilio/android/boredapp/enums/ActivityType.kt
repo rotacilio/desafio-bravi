@@ -1,6 +1,7 @@
 package br.com.rotacilio.android.boredapp.enums
 
 enum class ActivityType {
+    ALL,
     EDUCATION,
     RECREATIONAL,
     SOCIAL,
@@ -9,5 +10,9 @@ enum class ActivityType {
     COOKING,
     RELAXATION,
     MUSIC,
-    BUSYWORK
+    BUSYWORK;
+
+    override fun toString(): String {
+        return this.name
+    }
 }
