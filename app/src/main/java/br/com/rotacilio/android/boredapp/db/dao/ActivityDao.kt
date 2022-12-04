@@ -9,6 +9,6 @@ import br.com.rotacilio.android.boredapp.db.entities.ActivityEntity
 interface ActivityDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun create(activityEntity: ActivityEntity)
+    suspend fun create(activityEntity: ActivityEntity): Long
 
 }

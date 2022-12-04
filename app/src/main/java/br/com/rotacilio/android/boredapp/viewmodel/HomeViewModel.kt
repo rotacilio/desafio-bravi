@@ -1,10 +1,12 @@
 package br.com.rotacilio.android.boredapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.rotacilio.android.boredapp.enums.ActivityType
 import br.com.rotacilio.android.boredapp.model.Activity
 import br.com.rotacilio.android.boredapp.usecases.GetActivityUseCase
+import br.com.rotacilio.android.boredapp.usecases.SaveActivityUseCase
 import br.com.rotacilio.android.boredapp.utils.DataState
 import br.com.rotacilio.android.boredapp.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getActivityUseCase: GetActivityUseCase
+    private val getActivityUseCase: GetActivityUseCase,
+    private val saveActivityUseCase: SaveActivityUseCase
 ) : ViewModel() {
 
     sealed interface UiStateVC : UiState {
@@ -25,9 +28,9 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<UiState>
         get() = _uiState.asStateFlow()
 
-    private val _activity = MutableStateFlow<Activity?>(null)
-    val activity: StateFlow<Activity?>
-        get() = _activity.asStateFlow()
+    private val _activityWasSaved = MutableStateFlow(false)
+    val activityWasSaved: StateFlow<Boolean>
+        get() = _activityWasSaved.asStateFlow()
 
     fun getRandomActivity(type: ActivityType? = null) {
         viewModelScope.launch {
@@ -46,6 +49,21 @@ class HomeViewModel @Inject constructor(
             }.catch { e ->
                 e.printStackTrace()
                 _uiState.emit(UiState.Error(-1, e.message ?: "Unknown error."))
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun registerActivity(activity: Activity) {
+        viewModelScope.launch {
+            saveActivityUseCase(activity).onEach { dataState ->
+                when (dataState) {
+                    is DataState.Success -> {
+                        _activityWasSaved.emit(dataState.data)
+                    }
+                    else -> Unit
+                }
+            }.catch { e ->
+                e.printStackTrace()
             }.launchIn(viewModelScope)
         }
     }

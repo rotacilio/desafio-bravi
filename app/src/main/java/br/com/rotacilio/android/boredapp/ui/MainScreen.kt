@@ -2,6 +2,8 @@ package br.com.rotacilio.android.boredapp.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,9 +19,27 @@ fun MainScreen() {
         startDestination = startDestination
     ) {
         composable("home") {
-            HomeScreen()
+            HomeScreen(
+                onBack = {
+                    navController.navigate(
+                        startDestination,
+                        NavOptions.Builder()
+                            .setPopUpTo(navController.graph.findStartDestination().id, true)
+                            .build()
+                    )
+                },
+                goToPendingActivities = {
+                    navController.navigate("pendingActivities")
+                },
+                goToDoneActivities = {
+                    navController.navigate("doneActivities")
+                },
+            )
         }
-        composable("myActivities") {
+        composable("pendingActivities") {
+            Text(text = "My Activities Screen")
+        }
+        composable("doneActivities") {
             Text(text = "My Activities Screen")
         }
     }
